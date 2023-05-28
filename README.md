@@ -41,5 +41,12 @@ or if you didn't install it globally, you can type
 > 
 > Change `pckg-manager` to what package manager you use, example npm / yarn / pnpm.
 
+## How to contribute?
+for those who want to contribute in this framework, perhaps this help you well,
+you can do a few step below.
+- follow git commit message format [here](https://github.com/angular/angular/blob/68a6a07/CONTRIBUTING.md#commit) for consistency
+- has been tested one or more specs
+- create pull request
+
 ## Contributors
 - Muchlish Choeruddin [Mcx002](https://github.com/Mcx002)
