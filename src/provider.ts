@@ -1,6 +1,6 @@
 import EnvConfiguration from './config';
 import {Logger} from 'winston';
-import Controller from "./server/controllers";
+import Controller from './server/controllers';
 
 interface ProviderConstructor {
     config: EnvConfiguration

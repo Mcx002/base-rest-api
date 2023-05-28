@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'reflect-metadata'
 import {ModuleController, PathController} from './metadata-keys';
 import {RequestHandler} from 'express';
