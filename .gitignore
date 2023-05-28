@@ -1,0 +1,7 @@
+node_modules
+.idea
+
+.env
+.env.test
+
+base-rest-api.iml
