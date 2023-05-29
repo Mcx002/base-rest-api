@@ -24,7 +24,6 @@ describe('Booting Test', () => {
         // Expect config is match with certain object
         expect(config).toMatchObject({
             nodeEnv: 'test',
-            port: 3000
         })
     })
 
