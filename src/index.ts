@@ -1,9 +1,10 @@
 import express, {Express} from 'express';
 import cors, {CorsOptions} from 'cors';
-import EnvConfiguration from './config';
+import EnvConfiguration, {NodeEnvType} from './config';
 import winston, {Logger} from 'winston';
 import Provider from './provider';
 import Controller from './server/controllers';
+import Service from './server/services';
 
 type BootResult = {
     app: Express,
@@ -17,12 +18,21 @@ export function boot(): BootResult {
 
     // Prepare logger
     const logger = winston.createLogger({
-        level: config.nodeEnv === 'test' ? '' : 'debug',
-        format: winston.format.cli(),
+        defaultMeta: { mainLabel: 'Main' },
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+            winston.format.printf(({ message, timestamp, level, mainLabel, childLabel }) => {
+                return `${timestamp} [${level}] (${mainLabel}${childLabel ? ' | ' + childLabel : ''}): ${message}`;
+            })
+        ),
         transports: [
-            new winston.transports.Console(),
+            new winston.transports.Console({
+                silent: config.nodeEnv === NodeEnvType.Test
+            }),
         ],
     })
+
     logger.info('Booting...')
 
     // Prepare Dependencies Injection
@@ -33,9 +43,10 @@ export function boot(): BootResult {
     logger.info('Dependencies Injection Has Been Created')
 
     // Setting Up Controller
-    const controller = new Controller(provider)
+    provider.service = new Service(provider)
 
-    provider.controller = controller
+    const controller = new Controller(provider)
+    provider.controller = new Controller(provider)
 
     // Setting Up Cors Option
     const costOptions: CorsOptions = {

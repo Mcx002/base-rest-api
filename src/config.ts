@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import path from 'path';
 
-enum NodeEnvType {
+export enum NodeEnvType {
     Production = 'production',
     Development = 'development',
     Test = 'test'
@@ -14,10 +14,12 @@ export default class EnvConfiguration {
     public port: number
 
     public appName: string
+    public appVersion: string
     constructor() {
         this.nodeEnv = process.env['NODE_ENV'] ?? NodeEnvType.Development
         this.port = parseInt(process.env['PORT'] ?? '') ?? 3000
 
         this.appName = process.env['APP_NAME'] ?? ''
+        this.appVersion = process.env['APP_VERSION'] ?? ''
     }
 }
