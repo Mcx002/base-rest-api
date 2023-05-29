@@ -4,21 +4,25 @@ import {ModuleController, PathController} from '../../decorators/metadata-keys';
 import {HealthController} from './health.controller';
 import {Router} from 'express';
 import {PathMetadata} from '../../decorators/controller.decorator';
+import {Logger} from 'winston';
 
 export default class Controller {
     private readonly provider: Provider
-    public healthController
+    private readonly logger: Logger
+
+    public healthController: HealthController
 
     constructor(provider: Provider) {
         this.provider = provider
-        this.provider.logger = provider.logger.child({level: 'controller'})
-        this.healthController =  new HealthController()
+
+        this.healthController = new HealthController()
+        this.logger = provider.logger.child({childLabel: 'Controller'})
 
         for (const item in this) {
             if (!(this[item] instanceof BaseController)) {
                 continue
             }
-            (this[item] as BaseController).init(this.provider)
+            (this[item] as BaseController).init(this.provider, this.logger)
         }
     }
 
@@ -44,13 +48,19 @@ export default class Controller {
             const pathRoutes = Router()
 
             for (const path of paths) {
-                this.provider.logger.info(`Prepare ${module}${path.path} Endpoint`)
+                this.logger.info(`Prepare ${module}${path.path} Endpoint`)
                 pathRoutes[path.method](path.path, (req, res, next) => {
-                    const data = path.handler(req, res, next)
-                    res.json({
-                        message: 'ok',
-                        data,
-                    })
+                    try {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        const data = this[item][path.propertyKey](req, res, next)
+                        res.json({
+                            message: 'ok',
+                            data,
+                        })
+                    } catch (e) {
+                        console.log(e)
+                    }
                 })
             }
             moduleRoutes.use(module, pathRoutes)

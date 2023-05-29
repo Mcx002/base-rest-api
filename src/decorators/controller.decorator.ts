@@ -1,7 +1,6 @@
 /* eslint-disable */
 import 'reflect-metadata'
 import {ModuleController, PathController} from './metadata-keys';
-import {RequestHandler} from 'express';
 
 enum RestMethod {
     Get = 'get',
@@ -14,7 +13,7 @@ enum RestMethod {
 export type PathMetadata = {
     method: RestMethod
     path: string,
-    handler: RequestHandler
+    propertyKey: string
 }
 
 export function Module(module: string) {
@@ -36,7 +35,7 @@ const addPath = (method: RestMethod, path: string, target: any, propertyKey: str
     paths.push({
         method: method,
         path,
-        handler: target[propertyKey]
+        propertyKey: propertyKey
     })
 
     // Re-Define Metadata
