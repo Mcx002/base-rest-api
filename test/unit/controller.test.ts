@@ -1,8 +1,8 @@
-import Controller from "../../src/server/controllers";
-import Provider from "../../src/provider";
-import winston from "winston";
-import EnvConfiguration from "../../src/config";
-import {beforeEach, expect} from "@jest/globals";
+import Controller from '../../src/server/controllers';
+import Provider from '../../src/provider';
+import winston from 'winston';
+import EnvConfiguration from '../../src/config';
+import {beforeEach, expect} from '@jest/globals';
 
 describe('Controller Test', () => {
     let logger: winston.Logger
@@ -22,10 +22,7 @@ describe('Controller Test', () => {
         config = new EnvConfiguration()
 
         // Prepare provider
-        provider = new Provider({
-            config,
-            logger,
-        })
+        provider = new Provider(config, logger)
 
         // Init controller
         controller = new Controller(provider)
