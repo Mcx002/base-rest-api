@@ -1,13 +1,13 @@
 import EnvConfiguration from '../../src/config';
-import Model from '../../src/server/models';
+import ModelProvider from '../../src/server/models';
 import {createLoggerTest} from '../logger';
 import {beforeEach} from '@jest/globals';
-import Repository from '../../src/server/repositories';
+import RepositoryProvider from '../../src/server/repositories';
 import Provider from '../../src/provider';
 import {UserAttributes, UserCreationAttributes} from '../../src/server/models/user.model';
 
 describe('Database test', () => {
-    let repository: Repository
+    let repository: RepositoryProvider
 
     beforeEach(async () => {
         const config = new EnvConfiguration()
@@ -17,12 +17,12 @@ describe('Database test', () => {
         // Prepare Dependencies Injection
         const provider = new Provider(config, logger)
 
-        const db = new Model(provider)
+        const db = new ModelProvider(provider)
         const connected = await db.dbContext.checkConnection()
 
         expect(connected).toBe(true)
 
-        repository = new Repository(provider)
+        repository = new RepositoryProvider(provider)
     })
 
     test('Create Data', async () => {

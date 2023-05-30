@@ -1,4 +1,4 @@
-import Controller from '../../src/server/controllers';
+import ControllerProvider from '../../src/server/controllers';
 import Provider from '../../src/provider';
 import winston from 'winston';
 import EnvConfiguration from '../../src/config';
@@ -8,7 +8,7 @@ describe('Controller Test', () => {
     let logger: winston.Logger
     let config: EnvConfiguration
     let provider: Provider
-    let controller: Controller
+    let controller: ControllerProvider
     beforeEach(() => {
         // Init logger
         logger = winston.createLogger({
@@ -25,7 +25,7 @@ describe('Controller Test', () => {
         provider = new Provider(config, logger)
 
         // Init controller
-        controller = new Controller(provider)
+        controller = new ControllerProvider(provider)
     })
 
     test('Do Provider Injected', () => {
