@@ -7,7 +7,7 @@ import {PathMetadata} from '../../decorators/controller.decorator';
 import {Logger} from 'winston';
 import {UserController} from './user.controller';
 
-export default class Controller {
+export default class ControllerProvider {
     private readonly provider: Provider
     private readonly logger: Logger
 
