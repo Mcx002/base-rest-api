@@ -1,7 +1,7 @@
 import winston from 'winston';
 import EnvConfiguration from '../../src/config';
 import Provider from '../../src/provider';
-import Controller from '../../src/server/controllers';
+import ControllerProvider from '../../src/server/controllers';
 
 describe('Booting Test', () => {
     test('Logger is Defined', () => {
@@ -48,10 +48,7 @@ describe('Booting Test', () => {
         expect(provider.controller).toBeUndefined()
 
         // Init controller
-        const controller = new Controller(provider)
-
-        // Assign controller to provider
-        provider.controller = controller
+        provider.controller = new ControllerProvider(provider)
 
         // Expected provider has defined controller
         expect(provider.controller).toBeDefined()
