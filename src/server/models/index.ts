@@ -2,7 +2,7 @@ import {User} from './user.model';
 import Provider from '../../provider';
 import DbContext from '../../db-context';
 
-export default class Model {
+export default class ModelProvider {
     public dbContext: DbContext
     constructor(provider: Provider) {
         this.dbContext = new DbContext(provider)

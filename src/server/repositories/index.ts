@@ -3,7 +3,7 @@ import {Logger} from 'winston';
 import {UserRepository} from './user.repository';
 import BaseRepository from '../base/base-repository';
 
-export default class Repository {
+export default class RepositoryProvider {
     private readonly provider: Provider
     private readonly logger: Logger
 

@@ -4,7 +4,7 @@ import {HealthService} from './health.service';
 import {Logger} from 'winston';
 import {UserService} from './user.service';
 
-export default class Service {
+export default class ServiceProvider {
     private readonly provider: Provider
     private readonly logger: Logger
 
