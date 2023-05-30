@@ -5,19 +5,21 @@ import {HealthController} from './health.controller';
 import {Router} from 'express';
 import {PathMetadata} from '../../decorators/controller.decorator';
 import {Logger} from 'winston';
+import {UserController} from './user.controller';
 
 export default class Controller {
     private readonly provider: Provider
     private readonly logger: Logger
 
-    public healthController: HealthController
+    // Controller Store
+    public healthController = new HealthController()
+    public userController = new UserController()
 
     constructor(provider: Provider) {
         this.provider = provider
-
-        this.healthController = new HealthController()
         this.logger = provider.logger.child({childLabel: 'Controller'})
 
+        // Initiate Controller
         for (const item in this) {
             if (!(this[item] instanceof BaseController)) {
                 continue
@@ -26,7 +28,7 @@ export default class Controller {
         }
     }
 
-    getRouters = (): Router => {
+    getRouters = async (): Promise<Router> => {
         // Prepare route modules
         const moduleRoutes = Router()
         for (const item in this) {
@@ -49,11 +51,11 @@ export default class Controller {
 
             for (const path of paths) {
                 this.logger.info(`Prepare ${module}${path.path} Endpoint`)
-                pathRoutes[path.method](path.path, (req, res, next) => {
+                pathRoutes[path.method](path.path, async (req, res, next) => {
                     try {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
-                        const data = this[item][path.propertyKey](req, res, next)
+                        const data = await this[item][path.propertyKey](req, res, next)
                         res.json({
                             message: 'ok',
                             data,
@@ -64,7 +66,6 @@ export default class Controller {
                 })
             }
             moduleRoutes.use(module, pathRoutes)
-            return moduleRoutes
         }
         return moduleRoutes
     }

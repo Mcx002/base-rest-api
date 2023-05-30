@@ -1,7 +1,7 @@
 import winston from 'winston';
 import EnvConfiguration from '../../src/config';
-import Provider from "../../src/provider";
-import Controller from "../../src/server/controllers";
+import Provider from '../../src/provider';
+import Controller from '../../src/server/controllers';
 
 describe('Booting Test', () => {
     test('Logger is Defined', () => {
@@ -40,10 +40,7 @@ describe('Booting Test', () => {
         const config = new EnvConfiguration()
 
         // Prepare provider
-        const provider = new Provider({
-            config,
-            logger,
-        })
+        const provider = new Provider(config, logger)
 
         // expected config and logger to be defined and undefined for controller
         expect(provider.config).toBeDefined()
