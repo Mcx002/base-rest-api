@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.1
+- fix(test-e2e): Change before and after all to each
+
 ## v0.3.0
 - feat(user): Add user test e2e
 
