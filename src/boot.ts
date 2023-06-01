@@ -14,7 +14,7 @@ export type BootResult = {
     logger: Logger,
 }
 
-function createLogger(config: EnvConfiguration): winston.Logger {
+export function createLogger(config?: EnvConfiguration): winston.Logger {
     return winston.createLogger({
         defaultMeta: { mainLabel: 'Main' },
         format: winston.format.combine(
@@ -26,7 +26,7 @@ function createLogger(config: EnvConfiguration): winston.Logger {
         ),
         transports: [
             new winston.transports.Console({
-                level: config.nodeEnv === NodeEnvType.Test ? 'error' : 'info',
+                level: config?.nodeEnv === NodeEnvType.Test ? 'error' : 'info',
             }),
         ],
     })
