@@ -1,6 +1,6 @@
 import request from 'supertest'
 import EnvConfiguration from '../../src/config';
-import {afterAll, beforeAll} from '@jest/globals';
+import { afterEach, beforeEach} from '@jest/globals';
 import {UserCreationAttributes} from '../../src/server/models/user.model';
 import RepositoryProvider from '../../src/server/repositories';
 import Provider from '../../src/provider';
@@ -11,12 +11,11 @@ import * as http from 'http';
 
 describe('User Controller E2E Test', () => {
     let server: http.Server
-    beforeAll(async () => {
+    beforeEach(async () => {
         const settings = await boot()
         server = settings.app.listen(settings.config.port)
-
     })
-    afterAll(() => {
+    afterEach(() => {
         server.close()
     })
     test('[/users/:xid] Should Get User Detail', async () => {

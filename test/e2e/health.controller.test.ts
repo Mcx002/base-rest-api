@@ -1,17 +1,17 @@
 import request from 'supertest'
 import EnvConfiguration from '../../src/config';
-import {afterAll, beforeAll} from '@jest/globals';
+import { afterEach, beforeEach} from '@jest/globals';
 import http from 'http';
 import {boot} from '../../src/boot';
 
 describe('Health Controller E2E Test', () => {
     let server: http.Server
-    beforeAll(async () => {
+    beforeEach(async () => {
         const settings = await boot()
         server = settings.app.listen(settings.config.port)
 
     })
-    afterAll(() => {
+    afterEach(() => {
         server.close()
     })
     test('[/] Should Get Health', async () => {
