@@ -1,10 +1,8 @@
-import winston from 'winston';
+import winston from 'winston'
 
 export const createLoggerTest = () => {
     return winston.createLogger({
         level: 'error',
-        transports: [
-            new winston.transports.Console(),
-        ]
+        transports: [new winston.transports.Console()],
     })
 }

@@ -10,3 +10,8 @@ db-up:
 .PHONY: db-down
 db-down:
 	@npx sequelize-cli db:migrate:undo
+
+.PHONY: test
+test:
+	@jest --runInBand --detectOpenHandles
+

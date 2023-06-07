@@ -1,17 +1,17 @@
-import express, {Express} from 'express';
-import EnvConfiguration, {NodeEnvType} from './config';
-import winston, {Logger} from 'winston';
-import Provider from './provider';
-import ModelProvider from './server/models';
-import RepositoryProvider from './server/repositories';
-import ServiceProvider from './server/services';
-import ControllerProvider from './server/controllers';
-import cors, {CorsOptions} from 'cors';
+import express, { Express } from 'express'
+import EnvConfiguration, { NodeEnvType } from './config'
+import winston, { Logger } from 'winston'
+import Provider from './provider'
+import ModelProvider from './server/models'
+import RepositoryProvider from './server/repositories'
+import ServiceProvider from './server/services'
+import ControllerProvider from './server/controllers'
+import cors, { CorsOptions } from 'cors'
 
 export type BootResult = {
-    app: Express,
-    config: EnvConfiguration,
-    logger: Logger,
+    app: Express
+    config: EnvConfiguration
+    logger: Logger
 }
 
 export function createLogger(config?: EnvConfiguration): winston.Logger {
@@ -21,7 +21,7 @@ export function createLogger(config?: EnvConfiguration): winston.Logger {
             winston.format.colorize(),
             winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
             winston.format.printf(({ message, timestamp, level, mainLabel, childLabel }) => {
-                return `${timestamp} [${level}] (${mainLabel}${childLabel ? ' | ' + childLabel : ''}): ${message}`;
+                return `${timestamp} [${level}] (${mainLabel}${childLabel ? ' | ' + childLabel : ''}): ${message}`
             })
         ),
         transports: [
@@ -52,14 +52,9 @@ export async function boot(): Promise<BootResult> {
     await model.dbContext.checkConnection()
 
     // Setting Up Controller
-    const repository = new RepositoryProvider(provider)
-    const service = new ServiceProvider(provider)
-    const controller = new ControllerProvider(provider)
-
-    // Reassign providers
-    provider.repository = repository
-    provider.service = service
-    provider.controller = controller
+    provider.repository = new RepositoryProvider(provider)
+    provider.service = new ServiceProvider(provider)
+    provider.controller = new ControllerProvider(provider)
 
     // Setting Up Cors Option
     const costOptions: CorsOptions = {
@@ -71,7 +66,7 @@ export async function boot(): Promise<BootResult> {
     // Setting Up express
     const app = express()
     app.use(cors(costOptions))
-    app.use('/', await controller.getRouters())
+    app.use('/', await provider.controller.getRouters())
     logger.info('Express has been Set')
 
     logger.info('Booting Completed')

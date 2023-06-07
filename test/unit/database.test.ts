@@ -1,10 +1,10 @@
-import EnvConfiguration from '../../src/config';
-import ModelProvider from '../../src/server/models';
-import {createLoggerTest} from '../logger';
-import {beforeEach} from '@jest/globals';
-import RepositoryProvider from '../../src/server/repositories';
-import Provider from '../../src/provider';
-import {UserAttributes, UserCreationAttributes} from '../../src/server/models/user.model';
+import EnvConfiguration from '../../src/config'
+import ModelProvider from '../../src/server/models'
+import { createLoggerTest } from '../logger'
+import { beforeEach } from '@jest/globals'
+import RepositoryProvider from '../../src/server/repositories'
+import Provider from '../../src/provider'
+import { UserAttributes, UserCreationAttributes } from '../../src/server/models/user.model'
 
 describe('Database test', () => {
     let repository: RepositoryProvider
@@ -53,7 +53,6 @@ describe('Database test', () => {
         expect(data?.name).toEqual(row.name)
 
         await repository.userRepository.deleteById(user.id)
-
     })
     test('Update Data', async () => {
         const row: UserCreationAttributes = {
