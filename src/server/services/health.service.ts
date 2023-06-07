@@ -1,18 +1,18 @@
-import BaseService from '../base/base-service';
-import {convertSecondsToDuration} from '../../utils/date-formatter';
-import {HealthDto} from '../../dto/health.dto';
+import BaseService from '../base/base-service'
+import { convertSecondsToDuration } from '../../utils/date-formatter'
+import { HealthDto } from '../../dto/health.dto'
+import EnvConfiguration from '../../config'
+import Provider from '../../provider'
 
 export class HealthService extends BaseService {
+    config!: EnvConfiguration
+    init(provider: Provider) {
+        this.config = provider.config
+    }
+
     getHealth = (): HealthDto => {
         // convert seconds to duration
-        const {
-            years,
-            months,
-            days,
-            hours,
-            minutes,
-            seconds,
-        } = convertSecondsToDuration(process.uptime())
+        const { years, months, days, hours, minutes, seconds } = convertSecondsToDuration(process.uptime())
 
         let uptime = `${seconds} Seconds`
 
@@ -37,9 +37,9 @@ export class HealthService extends BaseService {
         }
 
         return {
-            appName: this.provider.config.appName,
-            version: this.provider.config.appVersion,
-            uptime: uptime
+            appName: this.config.appName,
+            version: this.config.appVersion,
+            uptime: uptime,
         }
     }
 }

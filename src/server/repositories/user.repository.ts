@@ -1,9 +1,16 @@
-import BaseRepository from '../base/base-repository';
-import {User, UserAttributes, UserCreationAttributes} from '../models/user.model';
+import BaseRepository from '../base/base-repository'
+import { User, UserAttributes, UserCreationAttributes } from '../models/user.model'
+import Provider from '../../provider'
+import { Logger } from 'winston'
 
 export class UserRepository extends BaseRepository {
+    log!: Logger
+    init(provider: Provider): void {
+        this.log = provider.logger
+    }
+
     findByXid = (xid: string): Promise<UserAttributes | null> => {
-        return User.findOne({ where: { xid }})
+        return User.findOne({ where: { xid } })
     }
 
     insert = (row: UserCreationAttributes): Promise<UserAttributes> => {
@@ -11,12 +18,12 @@ export class UserRepository extends BaseRepository {
     }
 
     update = async (row: UserAttributes): Promise<number> => {
-        const [count] = await User.update(row, { where: {id: row.id}})
+        const [count] = await User.update(row, { where: { id: row.id } })
 
         return count
     }
 
     deleteById = (id: number): Promise<number> => {
-        return User.destroy({where: { id }})
+        return User.destroy({ where: { id } })
     }
 }
