@@ -1,11 +1,5 @@
-import Provider from '../../provider';
-import {Logger} from 'winston';
+import Provider from '../../provider'
 
-export default class BaseService {
-    protected provider!: Provider
-    protected logger!: Logger
-    init(provider: Provider, logger: Logger) {
-        this.provider = provider
-        this.logger = logger
-    }
+export default abstract class BaseService {
+    abstract init(provider: Provider): void
 }

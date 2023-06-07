@@ -1,31 +1,29 @@
-import Provider from '../../provider';
-import BaseController from '../base/base-controller';
-import {ModuleController, PathController} from '../../decorators/metadata-keys';
-import {HealthController} from './health.controller';
-import {Router} from 'express';
-import {PathMetadata} from '../../decorators/controller.decorator';
-import {Logger} from 'winston';
-import {UserController} from './user.controller';
+import Provider from '../../provider'
+import BaseController from '../base/base-controller'
+import { ModuleController, PathController } from '../../decorators/metadata-keys'
+import { HealthController } from './health.controller'
+import { Router } from 'express'
+import { PathMetadata } from '../../decorators/controller.decorator'
+import { UserController } from './user.controller'
 
 export default class ControllerProvider {
-    private readonly provider: Provider
-    private readonly logger: Logger
+    readonly provider: Provider
 
     // Controller Store
     public healthController = new HealthController()
     public userController = new UserController()
 
     constructor(provider: Provider) {
-        this.provider = provider
-        this.logger = provider.logger.child({childLabel: 'Controller'})
+        this.provider = { ...provider }
+        this.provider.logger = provider.logger.child({ childLabel: 'Controller' })
 
         // Initiate Controller
-        for (const item in this) {
-            if (!(this[item] instanceof BaseController)) {
-                continue
+        Object.entries(this).forEach(([k, r]) => {
+            if (r instanceof BaseController) {
+                r.init(this.provider)
+                this.provider.logger.debug(`${k} initiated`)
             }
-            (this[item] as BaseController).init(this.provider, this.logger)
-        }
+        })
     }
 
     getRouters = async (): Promise<Router> => {
@@ -38,7 +36,7 @@ export default class ControllerProvider {
             }
 
             // Get target property
-            const target = (this[item] as BaseController)
+            const target = this[item] as BaseController
 
             // Get module metadata
             const module = Reflect.getMetadata(ModuleController, target)
@@ -50,7 +48,7 @@ export default class ControllerProvider {
             const pathRoutes = Router()
 
             for (const path of paths) {
-                this.logger.info(`Prepare ${module}${path.path} Endpoint`)
+                this.provider.logger.info(`Prepare ${module}${path.path} Endpoint`)
                 pathRoutes[path.method](path.path, async (req, res, next) => {
                     try {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -61,7 +59,11 @@ export default class ControllerProvider {
                             data,
                         })
                     } catch (e) {
-                        console.log(e)
+                        res.status(500)
+                        res.json({
+                            message: 'ERROR',
+                            data: e,
+                        })
                     }
                 })
             }

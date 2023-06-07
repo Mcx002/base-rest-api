@@ -1,12 +1,5 @@
-import Provider from '../../provider';
-import {Logger} from 'winston';
+import Provider from '../../provider'
 
-export default class BaseRepository {
-    provider!: Provider
-    logger!: Logger
-
-    init(provider: Provider, logger: Logger) {
-        this.provider = provider
-        this.logger = logger
-    }
+export default abstract class BaseRepository {
+    abstract init(provider: Provider): void
 }
