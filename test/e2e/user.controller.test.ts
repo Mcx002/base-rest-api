@@ -1,13 +1,13 @@
 import request from 'supertest'
-import EnvConfiguration from '../../src/config';
-import { afterEach, beforeEach} from '@jest/globals';
-import {UserCreationAttributes} from '../../src/server/models/user.model';
-import RepositoryProvider from '../../src/server/repositories';
-import Provider from '../../src/provider';
-import {createLoggerTest} from '../logger';
-import ModelProvider from '../../src/server/models';
-import {boot} from '../../src/boot';
-import * as http from 'http';
+import EnvConfiguration from '../../src/config'
+import { afterEach, beforeEach } from '@jest/globals'
+import { UserCreationAttributes } from '../../src/server/models/user.model'
+import RepositoryProvider from '../../src/server/repositories'
+import Provider from '../../src/provider'
+import { createLoggerTest } from '../logger'
+import ModelProvider from '../../src/server/models'
+import { boot } from '../../src/boot'
+import * as http from 'http'
 
 describe('User Controller E2E Test', () => {
     let server: http.Server

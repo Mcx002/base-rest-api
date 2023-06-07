@@ -1,13 +1,13 @@
 import dotenv from 'dotenv'
-import path from 'path';
+import path from 'path'
 
 export enum NodeEnvType {
     Production = 'production',
     Development = 'development',
-    Test = 'test'
+    Test = 'test',
 }
 
-dotenv.config({ path: path.join(process.cwd(), `.env${((process.env.NODE_ENV === NodeEnvType.Test) ? '.test' : '')}`) });
+dotenv.config({ path: path.join(process.cwd(), `.env${process.env.NODE_ENV === NodeEnvType.Test ? '.test' : ''}`) })
 
 export default class EnvConfiguration {
     public nodeEnv: string

@@ -1,16 +1,17 @@
-import winston from 'winston';
-import EnvConfiguration from '../../src/config';
-import Provider from '../../src/provider';
-import ControllerProvider from '../../src/server/controllers';
+import winston from 'winston'
+import EnvConfiguration from '../../src/config'
+import Provider from '../../src/provider'
+import ControllerProvider from '../../src/server/controllers'
+import ServiceProvider from '../../src/server/services'
+import RepositoryProvider from '../../src/server/repositories'
+import { createLoggerTest } from '../logger'
 
 describe('Booting Test', () => {
     test('Logger is Defined', () => {
         // Init logger
         const logger = winston.createLogger({
             format: winston.format.cli(),
-            transports: [
-                new winston.transports.Console(),
-            ],
+            transports: [new winston.transports.Console()],
         })
 
         // expect logger defined
@@ -29,12 +30,7 @@ describe('Booting Test', () => {
 
     test('Dependencies Injection Working Well', () => {
         // Init logger
-        const logger = winston.createLogger({
-            format: winston.format.cli(),
-            transports: [
-                new winston.transports.Console(),
-            ],
-        })
+        const logger = createLoggerTest()
 
         // Init environment configuration
         const config = new EnvConfiguration()
@@ -48,6 +44,8 @@ describe('Booting Test', () => {
         expect(provider.controller).toBeUndefined()
 
         // Init controller
+        provider.repository = new RepositoryProvider(provider)
+        provider.service = new ServiceProvider(provider)
         provider.controller = new ControllerProvider(provider)
 
         // Expected provider has defined controller

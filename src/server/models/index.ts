@@ -1,6 +1,6 @@
-import {User} from './user.model';
-import Provider from '../../provider';
-import DbContext from '../../db-context';
+import { User } from './user.model'
+import Provider from '../../provider'
+import DbContext from '../../db-context'
 
 export default class ModelProvider {
     public dbContext: DbContext
@@ -12,4 +12,3 @@ export default class ModelProvider {
         User.initModel(sequelize)
     }
 }
-

@@ -1,10 +1,9 @@
-import {boot} from './boot';
+import { boot } from './boot'
 
 async function main() {
-    const {app, config, logger} = await boot()
+    const { app, config, logger } = await boot()
 
     app.listen(config.port, () => logger.info(`Running on Port: ${config.port}`))
 }
 
-main()
-    .catch((e) => console.error(e))
+main().catch((e) => console.error(e))

@@ -1,8 +1,8 @@
-import EnvConfiguration from './config';
-import {Logger} from 'winston';
-import ControllerProvider from './server/controllers';
-import ServiceProvider from './server/services';
-import RepositoryProvider from './server/repositories';
+import EnvConfiguration from './config'
+import { Logger } from 'winston'
+import ControllerProvider from './server/controllers'
+import ServiceProvider from './server/services'
+import RepositoryProvider from './server/repositories'
 
 export default class Provider {
     public config: EnvConfiguration
