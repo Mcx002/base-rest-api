@@ -51,10 +51,15 @@ export async function boot(): Promise<BootResult> {
     // Will be throw error once got error
     await model.dbContext.checkConnection()
 
-    // Setting Up Controller
-    provider.repository = new RepositoryProvider(provider)
-    provider.service = new ServiceProvider(provider)
-    provider.controller = new ControllerProvider(provider)
+    // Setting Up providers
+    provider.repository = new RepositoryProvider()
+    provider.service = new ServiceProvider()
+    provider.controller = new ControllerProvider()
+
+    // Initiate providers
+    provider.repository.init(provider)
+    provider.service.init(provider)
+    provider.controller.init(provider)
 
     // Setting Up Cors Option
     const costOptions: CorsOptions = {

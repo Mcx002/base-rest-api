@@ -22,7 +22,8 @@ describe('Database test', () => {
 
         expect(connected).toBe(true)
 
-        repository = new RepositoryProvider(provider)
+        repository = new RepositoryProvider()
+        repository.init(provider)
     })
 
     test('Create Data', async () => {

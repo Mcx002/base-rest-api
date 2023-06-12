@@ -4,13 +4,13 @@ import { HealthService } from './health.service'
 import { UserService } from './user.service'
 
 export default class ServiceProvider {
-    private readonly provider: Provider
+    provider!: Provider
 
     // Service Store
-    public healthService: HealthService = new HealthService()
-    public userService: UserService = new UserService()
+    healthService: HealthService = new HealthService()
+    userService: UserService = new UserService()
 
-    constructor(provider: Provider) {
+    init(provider: Provider): void {
         this.provider = { ...provider }
         this.provider.logger = provider.logger.child({ childLabel: 'Service' })
 

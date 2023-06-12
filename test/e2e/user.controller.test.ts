@@ -31,7 +31,8 @@ describe('User Controller E2E Test', () => {
 
         expect(connected).toBe(true)
 
-        const repository = new RepositoryProvider(provider)
+        const repository = new RepositoryProvider()
+        repository.init(provider)
 
         const row: UserCreationAttributes = {
             xid: 'F89JDO',

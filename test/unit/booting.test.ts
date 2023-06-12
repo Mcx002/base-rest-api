@@ -43,12 +43,18 @@ describe('Booting Test', () => {
         expect(provider.logger).toBeDefined()
         expect(provider.controller).toBeUndefined()
 
-        // Init controller
-        provider.repository = new RepositoryProvider(provider)
-        provider.service = new ServiceProvider(provider)
-        provider.controller = new ControllerProvider(provider)
+        // Set up providers
+        provider.repository = new RepositoryProvider()
+        provider.service = new ServiceProvider()
+        provider.controller = new ControllerProvider()
+
+        // Init Providers
+        provider.repository.init(provider)
+        provider.service.init(provider)
+        provider.controller.init(provider)
 
         // Expected provider has defined controller
         expect(provider.controller).toBeDefined()
+        expect(provider.controller.provider.config).toMatchObject(provider.service.provider.config)
     })
 })
