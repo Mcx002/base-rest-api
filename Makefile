@@ -15,3 +15,7 @@ db-down:
 test:
 	@jest --runInBand --detectOpenHandles
 
+.PHONY: test-verbose
+test-verbose:
+	@jest --runInBand --detectOpenHandles --verbose
+
