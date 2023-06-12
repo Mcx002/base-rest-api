@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.4.0
+- feat(plopfile): Add plopfile generator
+
 ## v0.3.3
 - fix(provider): Change provider injection implementation
 
