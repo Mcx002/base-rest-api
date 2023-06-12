@@ -1,10 +1,13 @@
 import Provider from '../../provider'
 import BaseController from '../base/base-controller'
 import { ModuleController, PathController } from '../../decorators/metadata-keys'
-import { HealthController } from './health.controller'
 import { Router } from 'express'
 import { PathMetadata } from '../../decorators/controller.decorator'
+
+// Controller Imports
+import { HealthController } from './health.controller'
 import { UserController } from './user.controller'
+// -- Controller Import Port -- //
 
 export default class ControllerProvider {
     provider!: Provider
@@ -12,6 +15,7 @@ export default class ControllerProvider {
     // Controller Store
     healthController = new HealthController()
     userController = new UserController()
+    // -- Controller Initiation Port -- //
 
     init(provider: Provider): void {
         this.provider = { ...provider }

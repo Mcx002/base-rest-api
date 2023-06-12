@@ -1,12 +1,16 @@
 import Provider from '../../provider'
-import { UserRepository } from './user.repository'
 import BaseRepository from '../base/base-repository'
+
+// Repository Imports
+import { UserRepository } from './user.repository'
+// -- Repository Import Port -- //
 
 export default class RepositoryProvider {
     provider!: Provider
 
     // Repository Store
-    userRepository: UserRepository = new UserRepository()
+    userRepository = new UserRepository()
+    // -- Repository Initiation Port -- //
 
     init(provider: Provider): void {
         this.provider = { ...provider }
