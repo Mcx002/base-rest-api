@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.3
+- fix(provider): Change provider injection implementation
+
 ## v0.3.2
 - fix(base-init): Change Implementation of base initiation
 
