@@ -3,12 +3,12 @@ import { UserRepository } from './user.repository'
 import BaseRepository from '../base/base-repository'
 
 export default class RepositoryProvider {
-    private readonly provider: Provider
+    provider!: Provider
 
     // Repository Store
-    public userRepository: UserRepository = new UserRepository()
+    userRepository: UserRepository = new UserRepository()
 
-    constructor(provider: Provider) {
+    init(provider: Provider): void {
         this.provider = { ...provider }
         this.provider.logger = provider.logger.child({ childLabel: 'Repository' })
 

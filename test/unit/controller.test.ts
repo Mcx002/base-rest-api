@@ -23,9 +23,14 @@ describe('Controller Test', () => {
         provider = new Provider(config, logger)
 
         // Init controller
-        provider.repository = new RepositoryProvider(provider)
-        provider.service = new ServiceProvider(provider)
-        controller = new ControllerProvider(provider)
+        provider.repository = new RepositoryProvider()
+        provider.service = new ServiceProvider()
+        controller = new ControllerProvider()
+
+        // Initiate providers
+        provider.repository.init(provider)
+        provider.service.init(provider)
+        controller.init(provider)
     })
 
     test('Do Provider Injected', () => {

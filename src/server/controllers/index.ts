@@ -7,13 +7,13 @@ import { PathMetadata } from '../../decorators/controller.decorator'
 import { UserController } from './user.controller'
 
 export default class ControllerProvider {
-    readonly provider: Provider
+    provider!: Provider
 
     // Controller Store
-    public healthController = new HealthController()
-    public userController = new UserController()
+    healthController = new HealthController()
+    userController = new UserController()
 
-    constructor(provider: Provider) {
+    init(provider: Provider): void {
         this.provider = { ...provider }
         this.provider.logger = provider.logger.child({ childLabel: 'Controller' })
 
@@ -25,7 +25,6 @@ export default class ControllerProvider {
             }
         })
     }
-
     getRouters = async (): Promise<Router> => {
         // Prepare route modules
         const moduleRoutes = Router()
