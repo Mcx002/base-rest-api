@@ -4,8 +4,11 @@
   "description": "A base API from Mcx002",
   "main": "src/index.ts",
   "scripts": {
-    "test": "jest",
-    "lint:fix": "eslint --ext .ts --fix src --fix test"
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:verbose": "jest --runInBand --detectOpenHandles --verbose",
+    "format:fix": "eslint --ext .ts --fix src --fix test",
+    "db:up": "npx sequelize-cli db:migrate",
+    "db:down": "npx sequelize-cli db:migrate:undo"
   },
   "keywords": [
     "REST",
