@@ -7,6 +7,8 @@ import { PathMetadata } from '../../decorators/controller.decorator'
 // Controller Imports
 import { HealthController } from './health.controller'
 import { UserController } from './user.controller'
+import { ClientError, MError } from '../../utils/errors';
+import { ErrorResponse } from '../../dto/common.dto';
 // -- Controller Import Port -- //
 
 export default class ControllerProvider {
@@ -58,15 +60,23 @@ export default class ControllerProvider {
                         // @ts-ignore
                         const data = await this[item][path.propertyKey](req, res, next)
                         res.json({
-                            message: 'ok',
+                            message: 'OK',
                             data,
                         })
                     } catch (e) {
-                        res.status(500)
-                        res.json({
-                            message: 'ERROR',
-                            data: e,
-                        })
+                        // Set Error
+                        const error = e as MError
+                        const errorMessage: ErrorResponse = {
+                            message: error.message,
+                            data: error.data ?? null,
+                        }
+
+                        if (error instanceof ClientError) {
+                            errorMessage.code = error.code
+                        }
+
+                        res.status(error.status)
+                        res.json(errorMessage)
                     }
                 })
             }
