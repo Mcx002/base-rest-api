@@ -20,6 +20,10 @@ export default class DbContext {
         })
     }
 
+    disconnect = async () => {
+        await this.sequelize.close()
+    }
+
     checkConnection = async (): Promise<boolean> => {
         try {
             await this.sequelize.authenticate()
