@@ -2,6 +2,7 @@ import { NodeEnvType } from './config'
 import { Dialect, Sequelize } from 'sequelize'
 import { Logger } from 'winston'
 import Provider from './provider'
+import { ServerError } from './utils/errors'
 
 export default class DbContext {
     private logger: Logger
@@ -25,7 +26,7 @@ export default class DbContext {
             this.logger.info('Database Connected')
             return true
         } catch (e) {
-            throw new Error('Unable to connect to the database')
+            throw new ServerError('Unable to connect to the database')
         }
     }
 }
