@@ -1,4 +1,6 @@
 import { ClientError, ServerError } from '../../../src/utils/errors'
+import { errors } from '../../../src/server/constants/error.constant';
+import { ErrorResponse } from '../../../src/dto/common.dto';
 
 describe('Errors Utility', () => {
     test('Ensure ClientError Class Working well', () => {
@@ -20,5 +22,20 @@ describe('Errors Utility', () => {
 
         error.setStatus(502)
         expect(error.status).toBe(502)
+    })
+    test('Constant error is working', () => {
+        const error = errors.resourceNotFound
+        expect(error).toEqual(new ClientError('Resource Not Found').setCode('E_COMM_1'))
+        expect(error.message).toBe('Resource Not Found')
+    })
+    test('Validate error data', () => {
+        const e: ErrorResponse = new ServerError('Error')
+
+        expect(e.data).toBeNull()
+
+        const data = { xid: 'B31D' }
+        const e2 = new ServerError('Error', data)
+
+        expect(e2.data).toMatchObject(data)
     })
 })

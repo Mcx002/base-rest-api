@@ -7,8 +7,10 @@ export abstract class MError extends Error {
 
         this.status = status
         this.message = message
-        this.data = data
+        this.data = data ?? null
     }
+
+    abstract setStatus(status: number): MError
 }
 
 export class ClientError extends MError {
@@ -19,16 +21,16 @@ export class ClientError extends MError {
         this.code = 'N/A'
     }
 
-    setStatus(status: number): ClientError {
-        this.status = status
-
-        return this
-    }
-
     setCode(code: string): ClientError {
         if (code !== '') {
             this.code = code
         }
+
+        return this
+    }
+
+    setStatus(clientErrorStatusCode: number): ClientError {
+        this.status = clientErrorStatusCode
 
         return this
     }
@@ -39,8 +41,8 @@ export class ServerError extends MError {
         super(500, message, data)
     }
 
-    setStatus(status: number): ServerError {
-        this.status = status
+    setStatus(serverErrorStatusCode: number): ServerError {
+        this.status = serverErrorStatusCode
 
         return this
     }
