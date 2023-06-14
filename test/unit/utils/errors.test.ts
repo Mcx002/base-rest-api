@@ -1,6 +1,6 @@
 import { ClientError, ServerError } from '../../../src/utils/errors'
-import { errors } from '../../../src/server/constants/error.constant';
-import { ErrorResponse } from '../../../src/dto/common.dto';
+import { errors } from '../../../src/server/constants/error.constant'
+import { ErrorResponse } from '../../../src/dto/common.dto'
 
 describe('Errors Utility', () => {
     test('Ensure ClientError Class Working well', () => {
