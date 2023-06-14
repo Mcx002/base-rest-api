@@ -1,15 +1,17 @@
 import EnvConfiguration from '../../src/config'
 import ModelProvider from '../../src/server/models'
 import { createLoggerTest } from '../logger'
-import { beforeEach } from '@jest/globals'
 import RepositoryProvider from '../../src/server/repositories'
 import Provider from '../../src/provider'
 import { UserAttributes, UserCreationAttributes } from '../../src/server/models/user.model'
+import { afterAll } from '@jest/globals'
+import { ServerError } from '../../src/utils/errors';
 
 describe('Database test', () => {
     let repository: RepositoryProvider
+    let db: ModelProvider
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const config = new EnvConfiguration()
 
         const logger = createLoggerTest()
@@ -17,13 +19,21 @@ describe('Database test', () => {
         // Prepare Dependencies Injection
         const provider = new Provider(config, logger)
 
-        const db = new ModelProvider(provider)
+        db = new ModelProvider(provider)
         const connected = await db.dbContext.checkConnection()
 
         expect(connected).toBe(true)
 
         repository = new RepositoryProvider()
         repository.init(provider)
+    })
+
+    afterAll(async () => {
+        await db.dbContext.disconnect()
+
+        await expect(async () => {
+            await db.dbContext.checkConnection()
+        }).rejects.toThrow(ServerError)
     })
 
     test('Create Data', async () => {
