@@ -5,6 +5,7 @@ import { UserAttributes } from '../models/user.model'
 import { Logger } from 'winston'
 import Provider from '../../provider'
 import { UserRepository } from '../repositories/user.repository'
+import { errors } from '../constants/error.constant'
 
 export class UserService extends BaseService {
     log!: Logger
@@ -21,7 +22,7 @@ export class UserService extends BaseService {
         // Find User by xid
         const row = await this.userRepository.findByXid(payload.xid)
         if (!row) {
-            throw new Error('Resource not found')
+            throw errors.resourceNotFound
         }
 
         return this.composeUser(row)
