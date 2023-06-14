@@ -5,7 +5,7 @@ import RepositoryProvider from '../../src/server/repositories'
 import Provider from '../../src/provider'
 import { UserAttributes, UserCreationAttributes } from '../../src/server/models/user.model'
 import { afterAll } from '@jest/globals'
-import { ServerError } from '../../src/utils/errors';
+import { ServerError } from '../../src/utils/errors'
 
 describe('Database test', () => {
     let repository: RepositoryProvider

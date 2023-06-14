@@ -68,7 +68,7 @@ export default class ControllerProvider {
                         const error = e as MError
                         const errorMessage: ErrorResponse = {
                             message: error.message,
-                            data: error.data ?? null,
+                            data: error.data,
                         }
 
                         if (error instanceof ClientError) {

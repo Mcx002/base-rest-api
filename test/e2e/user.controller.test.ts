@@ -51,4 +51,11 @@ describe('User Controller E2E Test', () => {
 
         await repository.userRepository.deleteById(data.id)
     })
+
+    test('[/users/:xid] Should not Found User Detail', async () => {
+        const resErr = await request(server).get('/users/UNREGISTERED_XID')
+        expect(resErr.statusCode).toEqual(400)
+        expect(resErr.body.message).toBe('Resource Not Found')
+        expect(resErr.body.data).toBeNull()
+    })
 })
