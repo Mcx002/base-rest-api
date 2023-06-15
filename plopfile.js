@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 module.exports = function (plop) {
     plop.setGenerator('controller', {
         description: 'Create Controller File',
