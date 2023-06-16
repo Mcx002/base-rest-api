@@ -1,5 +1,4 @@
-import dotenv from 'dotenv'
-import path from 'path'
+import { getEnvNumber, getEnvString } from './utils/env-parsers';
 
 export enum NodeEnvType {
     Production = 'production',
@@ -7,36 +6,20 @@ export enum NodeEnvType {
     Test = 'test',
 }
 
-dotenv.config({ path: path.join(process.cwd(), `.env${process.env.NODE_ENV === NodeEnvType.Test ? '.test' : ''}`) })
-
 export default class EnvConfiguration {
-    public nodeEnv: string
-    public port: number
+    // Service Environment
+    nodeEnv = getEnvString('NODE_ENV', NodeEnvType.Development)
+    port = getEnvNumber('PORT', 3000)
 
-    public appName: string
-    public appVersion: string
+    // App Environment
+    appName = getEnvString('APP_NAME', '')
+    appVersion = getEnvString('APP_VERSION', '')
 
-    public dbName: string
-    public dbUsername: string
-    public dbPassword: string
-    public dbDialect: string
-    public dbHost: string
-    public dbPort: number
-    constructor() {
-        // Service Environment
-        this.nodeEnv = process.env['NODE_ENV'] ?? NodeEnvType.Development
-        this.port = parseInt(process.env['PORT'] ?? '3000')
-
-        // App Environment
-        this.appName = process.env['APP_NAME'] ?? ''
-        this.appVersion = process.env['APP_VERSION'] ?? ''
-
-        // Database Configuration
-        this.dbName = process.env['DB_NAME']!
-        this.dbUsername = process.env['DB_USERNAME']!
-        this.dbPassword = process.env['DB_PASSWORD']!
-        this.dbDialect = process.env['DB_DIALECT'] ?? 'postgres'
-        this.dbHost = process.env['DB_HOST'] ?? 'localhost'
-        this.dbPort = parseInt(process.env['DB_PORT'] ?? '5433')
-    }
+    // Database Configuration
+    dbName = getEnvString('DB_NAME')
+    dbUsername = getEnvString('DB_USERNAME')
+    dbPassword = getEnvString('DB_PASSWORD')
+    dbDialect = getEnvString('DB_DIALECT', 'postgres')
+    dbHost = getEnvString('DB_HOST', 'localhost')
+    dbPort = getEnvNumber('DB_PORT', 5433)
 }
