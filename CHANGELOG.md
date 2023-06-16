@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.5.0
+- feat(error): Implement Error Mapping
+
 ## v0.4.0
 - feat(plopfile): Add plopfile generator
 
