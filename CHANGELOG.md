@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.6.0
+- feat(test): Add test db config
+
 ## v0.5.0
 - feat(error): Implement Error Mapping
 
