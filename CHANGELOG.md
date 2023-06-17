@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.7.0
+- feat(env): Implement env parser
+
 ## v0.6.0
 - feat(test): Add test db config
 
