@@ -48,13 +48,11 @@ export function Get(path = '') {
     }
 }
 
-
 export function Post(path = '') {
     return function (target: any, propertyKey: string, _: PropertyDescriptor) {
         addPath(RestMethod.Post, path, target, propertyKey)
     }
 }
-
 
 export function Put(path = '') {
     return function (target: any, propertyKey: string, _: PropertyDescriptor) {
@@ -62,13 +60,11 @@ export function Put(path = '') {
     }
 }
 
-
 export function Delete(path = '') {
     return function (target: any, propertyKey: string, _: PropertyDescriptor) {
         addPath(RestMethod.Delete, path, target, propertyKey)
     }
 }
-
 
 export function Patch(path = '') {
     return function (target: any, propertyKey: string, _: PropertyDescriptor) {

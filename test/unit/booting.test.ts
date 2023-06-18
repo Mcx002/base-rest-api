@@ -7,6 +7,10 @@ import RepositoryProvider from '../../src/server/repositories'
 import { createLoggerTest } from '../logger'
 
 describe('Booting Test', () => {
+    let config: EnvConfiguration
+    beforeAll(() => {
+        config = new EnvConfiguration()
+    })
     test('Logger is Defined', () => {
         // Init logger
         const logger = winston.createLogger({
@@ -19,9 +23,6 @@ describe('Booting Test', () => {
     })
 
     test('Env Configuration Can Be Loaded', () => {
-        // Init environment configuration
-        const config = new EnvConfiguration()
-
         // Expect config is match with certain object
         expect(config).toMatchObject({
             nodeEnv: 'test',
@@ -31,9 +32,6 @@ describe('Booting Test', () => {
     test('Dependencies Injection Working Well', () => {
         // Init logger
         const logger = createLoggerTest()
-
-        // Init environment configuration
-        const config = new EnvConfiguration()
 
         // Prepare provider
         const provider = new Provider(config, logger)
