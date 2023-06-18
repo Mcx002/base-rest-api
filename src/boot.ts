@@ -1,5 +1,5 @@
 import express, { Express } from 'express'
-import EnvConfiguration, { NodeEnvType } from './config'
+import EnvConfiguration, { NodeEnvType } from './config';
 import winston, { Logger } from 'winston'
 import Provider from './provider'
 import ModelProvider from './server/models'
@@ -14,9 +14,10 @@ export type BootResult = {
     logger: Logger
 }
 
-export function createLogger(config?: EnvConfiguration): winston.Logger {
+export function createMainLogger(logLevel: string): winston.Logger {
     return winston.createLogger({
         defaultMeta: { mainLabel: 'Main' },
+        level: logLevel,
         format: winston.format.combine(
             winston.format.colorize(),
             winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
@@ -24,11 +25,7 @@ export function createLogger(config?: EnvConfiguration): winston.Logger {
                 return `${timestamp} [${level}] (${mainLabel}${childLabel ? ' | ' + childLabel : ''}): ${message}`
             })
         ),
-        transports: [
-            new winston.transports.Console({
-                level: config?.nodeEnv === NodeEnvType.Test ? 'error' : 'info',
-            }),
-        ],
+        transports: [new winston.transports.Console()],
     })
 }
 
@@ -37,7 +34,7 @@ export async function boot(): Promise<BootResult> {
     const config = new EnvConfiguration()
 
     // Prepare logger
-    const logger = createLogger(config)
+    const logger = createMainLogger(config.nodeEnv === NodeEnvType.Test ? 'error' : 'info')
 
     logger.info('Booting...')
 
@@ -63,7 +60,7 @@ export async function boot(): Promise<BootResult> {
 
     // Setting Up Cors Option
     const costOptions: CorsOptions = {
-        origin: '*',
+        origin: config.corsOrigin,
         methods: 'GET,POST,OPTIONS,PUT,DELETE,PATCH',
     }
     logger.info('CORS Option has been Set')
