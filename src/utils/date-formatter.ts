@@ -1,4 +1,6 @@
-export const convertSecondsToDuration = (seconds: number) => {
+import { Uptime } from '../dto/health.dto'
+
+export const convertSecondsToUptime = (seconds: number): Uptime => {
     const secondsInYear = 31536000 // 60 seconds * 60 minutes * 24 hours * 365 days
     const secondsInMonth = 2592000 // 60 seconds * 60 minutes * 24 hours * 30 days
     const secondsInDay = 86400 // 60 seconds * 60 minutes * 24 hours
