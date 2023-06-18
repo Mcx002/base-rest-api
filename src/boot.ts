@@ -1,5 +1,5 @@
 import express, { Express } from 'express'
-import EnvConfiguration, { NodeEnvType } from './config';
+import EnvConfiguration, { NodeEnvType } from './config'
 import winston, { Logger } from 'winston'
 import Provider from './provider'
 import ModelProvider from './server/models'
@@ -67,6 +67,7 @@ export async function boot(): Promise<BootResult> {
 
     // Setting Up express
     const app = express()
+    app.disable('x-powered-by')
     app.use(cors(costOptions))
     app.use('/', await provider.controller.getRouters())
     logger.info('Express has been Set')
