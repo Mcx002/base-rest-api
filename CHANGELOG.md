@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.7.1
+- fix(test): Maximize test coverage
+
 ## v0.7.0
 - feat(env): Implement env parser
 
