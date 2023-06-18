@@ -1,4 +1,4 @@
-import { getEnvNumber, getEnvString } from './utils/env-parsers';
+import { getEnvNumber, getEnvString } from './utils/env-parsers'
 
 export enum NodeEnvType {
     Production = 'production',

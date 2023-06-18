@@ -1,15 +1,15 @@
-import { NodeEnvType } from './config'
+import { NodeEnvType } from '../../config'
 import { Dialect, Sequelize } from 'sequelize'
 import { Logger } from 'winston'
-import Provider from './provider'
-import { ServerError } from './utils/errors'
+import Provider from '../../provider'
+import { ServerError } from '../../utils/errors'
 
-export default class DbContext {
+export default class DbAdapter {
     private logger: Logger
     sequelize: Sequelize
 
     constructor(provider: Provider) {
-        this.logger = provider.logger.child({ childLabel: 'DbContext' })
+        this.logger = provider.logger.child({ childLabel: 'DbAdapter' })
         const config = provider.config
 
         this.sequelize = new Sequelize(config.dbName, config.dbUsername, config.dbPassword, {

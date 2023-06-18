@@ -1,11 +1,11 @@
 import { User } from './user.model'
 import Provider from '../../provider'
-import DbContext from '../../db-context'
+import DbAdapter from '../adapters/db.adapter'
 
 export default class ModelProvider {
-    public dbContext: DbContext
+    public dbContext: DbAdapter
     constructor(provider: Provider) {
-        this.dbContext = new DbContext(provider)
+        this.dbContext = new DbAdapter(provider)
         const sequelize = this.dbContext.sequelize
 
         // Initiate Model
