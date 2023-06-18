@@ -22,4 +22,7 @@ export default class EnvConfiguration {
     dbDialect = getEnvString('DB_DIALECT', 'postgres')
     dbHost = getEnvString('DB_HOST', 'localhost')
     dbPort = getEnvNumber('DB_PORT', 5433)
+
+    // Cors
+    corsOrigin = getEnvString('CORS_ORIGIN', '*')
 }
