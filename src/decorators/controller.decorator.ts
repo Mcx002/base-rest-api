@@ -33,7 +33,7 @@ const addPath = (method: RestMethod, path: string, target: any, propertyKey: str
 
     // Push new path
     paths.push({
-        method: method,
+        method,
         path,
         propertyKey: propertyKey
     })
