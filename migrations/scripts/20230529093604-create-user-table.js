@@ -10,16 +10,16 @@ module.exports = {
                 primaryKey: true,
             },
             xid: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(6),
                 unique: true,
                 allowNull: false,
             },
             name: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
             email: {
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(255),
                 allowNull: false,
             },
         })
