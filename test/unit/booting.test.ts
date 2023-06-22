@@ -1,10 +1,8 @@
 import winston from 'winston'
 import EnvConfiguration from '../../src/config'
 import Provider from '../../src/provider'
-import ControllerProvider from '../../src/server/controllers'
-import ServiceProvider from '../../src/server/services'
-import RepositoryProvider from '../../src/server/repositories'
 import { createLoggerTest } from '../logger'
+import { initProvider } from '../../src/boot'
 
 describe('Booting Test', () => {
     let config: EnvConfiguration
@@ -42,14 +40,7 @@ describe('Booting Test', () => {
         expect(provider.controller).toBeUndefined()
 
         // Set up providers
-        provider.repository = new RepositoryProvider()
-        provider.service = new ServiceProvider()
-        provider.controller = new ControllerProvider()
-
-        // Init Providers
-        provider.repository.init(provider)
-        provider.service.init(provider)
-        provider.controller.init(provider)
+        initProvider(provider)
 
         // Expected provider has defined controller
         expect(provider.controller).toBeDefined()
