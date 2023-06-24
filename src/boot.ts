@@ -41,12 +41,16 @@ export function createMainLogger(logLevel: string): winston.Logger {
     })
 }
 
+export function getLogLevel(nodeEnv: string): string {
+    return nodeEnv === NodeEnvType.Test ? 'error' : 'info'
+}
+
 export async function boot(): Promise<BootResult> {
     // Prepare Configuration
     const config = new EnvConfiguration()
 
     // Prepare logger
-    const logger = createMainLogger(config.nodeEnv === NodeEnvType.Test ? 'error' : 'info')
+    const logger = createMainLogger(getLogLevel(config.nodeEnv))
 
     logger.info('Booting...')
 
