@@ -2,7 +2,7 @@ import winston from 'winston'
 import EnvConfiguration from '../../src/config'
 import Provider from '../../src/provider'
 import { createLoggerTest } from '../logger'
-import { initProvider } from '../../src/boot'
+import { getLogLevel, initProvider } from '../../src/boot'
 
 describe('Booting Test', () => {
     let config: EnvConfiguration
@@ -45,5 +45,17 @@ describe('Booting Test', () => {
         // Expected provider has defined controller
         expect(provider.controller).toBeDefined()
         expect(provider.controller.provider.config).toMatchObject(provider.service.provider.config)
+    })
+
+    test('Should return logLevel to be equal error', () => {
+        const logLevel = getLogLevel('test')
+
+        expect(logLevel).toBe('error')
+    })
+
+    test('Should return logLevel to be equal info', () => {
+        const logLevel = getLogLevel('development')
+
+        expect(logLevel).toBe('info')
     })
 })
