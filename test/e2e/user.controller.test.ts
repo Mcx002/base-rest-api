@@ -35,7 +35,7 @@ describe('User Controller E2E Test', () => {
     let provider: Provider
     beforeAll(async () => {
         const settings = await boot()
-        server = settings.app.listen(settings.config.port)
+        server = settings.app.listen(settings.port)
         provider = createProviderTest()
     })
     afterAll(() => {

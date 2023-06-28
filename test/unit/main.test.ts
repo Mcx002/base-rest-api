@@ -11,16 +11,13 @@ describe('Test coverage for main function', () => {
         const mockApp = {
             listen: jest.fn(),
         }
-        const mockConfig = {
-            port: 3000,
-        }
         const mockLogger = {
             info: jest.fn(),
         }
 
         ;(boot as jest.Mock).mockResolvedValueOnce({
             app: mockApp,
-            config: mockConfig,
+            port: 3000,
             logger: mockLogger,
         })
 
@@ -28,6 +25,6 @@ describe('Test coverage for main function', () => {
         await require('../../src/index') // Assuming the file with the main function is named "main.ts"
 
         // Assert
-        expect(mockApp.listen).toHaveBeenCalledWith(mockConfig.port, expect.any(Function))
+        expect(mockApp.listen).toHaveBeenCalledWith(3000, expect.any(Function))
     })
 })
