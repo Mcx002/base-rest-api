@@ -10,7 +10,7 @@ import ControllerProvider from './server/controllers'
 
 export type BootResult = {
     app: Express
-    config: EnvConfiguration
+    port: number
     logger: Logger
 }
 
@@ -85,7 +85,7 @@ export async function boot(): Promise<BootResult> {
     logger.info('Booting Completed')
     return {
         app,
-        config,
+        port: config.port,
         logger,
     }
 }

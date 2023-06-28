@@ -8,7 +8,7 @@ describe('Health Controller E2E Test', () => {
     let server: http.Server
     beforeEach(async () => {
         const settings = await boot()
-        server = settings.app.listen(settings.config.port)
+        server = settings.app.listen(settings.port)
     })
     afterEach(() => {
         server.close()
