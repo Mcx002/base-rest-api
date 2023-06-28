@@ -2,7 +2,7 @@
 import 'reflect-metadata'
 import {ModuleController, PathController} from './metadata-keys';
 
-enum RestMethod {
+export enum RestMethod {
     Get = 'get',
     Post = 'post',
     Put = 'put',
@@ -35,7 +35,7 @@ const addPath = (method: RestMethod, path: string, target: any, propertyKey: str
     paths.push({
         method,
         path,
-        propertyKey: propertyKey
+        propertyKey
     })
 
     // Re-Define Metadata
