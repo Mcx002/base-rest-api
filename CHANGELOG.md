@@ -1,5 +1,10 @@
 # Changelog
 
+
+## v0.8.0
+- fix(test): Add test coverage for log level
+- feat(validator): Add validator
+
 ## v0.7.1
 - fix(test): Maximize test coverage
 
