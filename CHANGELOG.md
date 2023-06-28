@@ -1,5 +1,7 @@
 # Changelog
 
+## v0.9.0
+- feat(decorator): Add decorator unit test
 
 ## v0.8.0
 - fix(test): Add test coverage for log level
